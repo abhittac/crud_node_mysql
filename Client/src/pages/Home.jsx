@@ -59,7 +59,8 @@ function Home() {
     resetForm();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     const apiUrl = isEditing ? `http://localhost:8081/edit/${currentStudent.id}` : 'http://localhost:8081/create';
     const requestMethod = isEditing ? axios.put : axios.post;
 
@@ -95,6 +96,7 @@ function Home() {
                 name="name"
                 value={newStudent.name}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="mb-3">
@@ -106,12 +108,13 @@ function Home() {
                 name="email"
                 value={newStudent.email}
                 onChange={handleInputChange}
+                required
               />
             </div>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
-            <button type="button" className="btn btn-success" onClick={handleSubmit}>
+            <button type="submit" className="btn btn-success" >
               {isEditing ? 'Update' : 'Save'}
             </button>
           </div>
@@ -169,8 +172,10 @@ function Home() {
           )}
         </tbody>
       </table>
+          <form onSubmit={handleSubmit} >
 
       {showModal && renderModal()}
+          </form>
     </div>
   );
 }
